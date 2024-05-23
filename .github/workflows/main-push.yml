@@ -47,29 +47,18 @@ jobs:
     needs: build
 
     steps:
-      - name: Deploy Debug Info
-        run: |
-          echo "Starting Deploy..."
-          
-      - name: Make id_rsa
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.REMOTE_SERVER_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          
-      - name: Pull container
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-          sudo docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
-          ENDSSH
-          
-      - name: Stop current container
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-          sudo docker stop BOT_APP 2> /dev/null
-          ENDSSH
-          
-      - name: Run container
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
-          sudo docker stop BOT_APP 2> /dev/null
-          ENDSSH
+      - name: Deploy BOT on remote server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_SERVER_ADDRESS }}
+          username: ${{ secrets.REMOTE_SERVER_USERNAME }}
+          key: ${{ secrets.REMOTE_SERVER_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_SERVER_PORT }}
+          script: |
+            echo "Pulling image..."
+            sudo docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
+            echo "Stopping BOT_APP container..."
+            sudo docker stop BOT_APP 2> /dev/null
+            echo "Starting BOT_APP..."
+            sudo docker run -it -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }} --name BOT_APP -d
+  
