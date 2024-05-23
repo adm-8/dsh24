@@ -42,7 +42,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
         
   deploy:
-    name: Deploy BOT on Server
+    name: Deploy BOT on remote server
     runs-on: ubuntu-latest
     needs: build
 
@@ -50,3 +50,26 @@ jobs:
       - name: Deploy Debug Info
         run: |
           echo "Starting Deploy..."
+          
+      - name: Make id_rsa
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.REMOTE_SERVER_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          
+      - name: Pull container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          sudo docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
+          ENDSSH
+          
+      - name: Stop current container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          sudo docker stop BOT_APP 2> /dev/null
+          ENDSSH
+          
+      - name: Run container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_ADDRESS }} << 'ENDSSH'
+          sudo docker stop BOT_APP 2> /dev/null
+          ENDSSH
