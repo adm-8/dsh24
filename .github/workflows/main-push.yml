@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Print Debug Info
+        run: |
+          echo "DOCKERHUB_USERNAME: ${{ env.DOCKERHUB_USERNAME }}"
+          echo "DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}"
+          echo "DOCKERHUB_REPO: ${{ env.DOCKERHUB_REPO }}"
+          echo "DOCKERHUB_TAG: ${{ env.DOCKERHUB_TAG }}"
+        
       - name: Checkout code
         uses: actions/checkout@v3
 
