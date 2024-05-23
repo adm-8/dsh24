@@ -59,6 +59,8 @@ jobs:
             sudo docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
             echo "Stopping BOT_APP container..."
             sudo docker stop BOT_APP 2> /dev/null
+            echo "Removing old BOT_APP container..."
+            sudo docker rm BOT_APP
             echo "Starting BOT_APP..."
             sudo docker run --name BOT_APP -d -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
   
