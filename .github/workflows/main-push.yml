@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Print Debug Info
         run: |
-          echo "DOCKERHUB_USERNAME: ${{ env.DOCKERHUB_USERNAME }}"
+          echo "DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}"
           echo "DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}"
-          echo "DOCKERHUB_REPO: ${{ env.DOCKERHUB_REPO }}"
-          echo "DOCKERHUB_TAG: ${{ env.DOCKERHUB_TAG }}"
+          echo "DOCKERHUB_REPO: ${{ vars.DOCKERHUB_REPO }}"
+          echo "DOCKERHUB_TAG: ${{ vars.DOCKERHUB_TAG }}"
         
       - name: Checkout code
         uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
         with:
           context: .
           tags: |
-            ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKERHUB_REPO }}:${{ env.DOCKERHUB_TAG }}
+            ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
           push: true
 
       - name: Image digest
