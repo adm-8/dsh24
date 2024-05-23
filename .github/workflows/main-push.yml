@@ -60,5 +60,5 @@ jobs:
             echo "Stopping BOT_APP container..."
             sudo docker stop BOT_APP 2> /dev/null
             echo "Starting BOT_APP..."
-            sudo docker run -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }} --name BOT_APP -d
+            sudo docker run --name BOT_APP -d -e TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }} -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
   
