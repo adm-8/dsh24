@@ -4,13 +4,13 @@ on:
   push:
     branches: [ main ]
 
-jobs:
+jobs:    
   build:
     name: Build and push BOT Docker Image
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Debug Info
+      - name: Build Debug Info
         run: |
           echo "DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}"
           echo "DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}"
@@ -40,3 +40,13 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+        
+  deploy:
+    name: Deploy BOT on Server
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy Debug Info
+        run: |
+          echo "Starting Deploy..."
