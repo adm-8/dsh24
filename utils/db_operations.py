@@ -10,8 +10,6 @@ logger = get_logger(file_path=logger_file_path)
 
 
 async def execute_sql(sql: str, data):
-    logger.info("Executing SQL:", sql)
-    logger.info("data = ", data)
     with psycopg.connect(PG_DB_URI) as conn:
         with conn.cursor() as cur:
             try:

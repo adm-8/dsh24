@@ -26,6 +26,7 @@ async def start_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def hello_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # логируем сообщение
     await log_message(update=update, context=context)
+
     # ответ
     reply = f"Привет, {update.message.chat.first_name}!" 
     
