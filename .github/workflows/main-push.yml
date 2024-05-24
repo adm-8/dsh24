@@ -72,7 +72,7 @@ jobs:
             DOCKERHUB_REPO=${{ vars.DOCKERHUB_REPO }}
             DOCKERHUB_TAG=${{ vars.DOCKERHUB_TAG }}
             EOT
-            docker rm -f opt-bot_db-1
-            docker volume rm -f opt_bot-db-data
+            docker rm -f opt-bot_db-1 2> /dev/null
+            docker volume rm -f opt_bot-db-data 2> /dev/null
             docker compose --env-file /var/opt/bot/.env -f /var/opt/docker-compose.yml up -d
             echo "Deploying BOT APP complete"
