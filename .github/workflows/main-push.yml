@@ -60,10 +60,10 @@ jobs:
             rm -r /var/opt/bot/ 2> /dev/null
             mkdir -p /var/opt/bot/db_init_scripts
             
-            wget https://raw.githubusercontent.com/adm-8/dsh24/main/docker-compose.yml -O /var/opt/bot/docker-compose.yml
-            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/v0001_create_schema.sql -O /var/opt/bot/db_init_scripts/v0001_create_schema.sql
-            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0002_create_tables.sql -O /var/opt/bot/db_init_scripts/V0002_create_tables.sql
-            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0003_insert_data.sql -O /var/opt/bot/db_init_scripts/V0003_insert_data.sql
+            wget --no-cache --no-cookies https://raw.githubusercontent.com/adm-8/dsh24/main/docker-compose.yml -O /var/opt/bot/docker-compose.yml
+            wget --no-cache --no-cookies https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/v0001_create_schema.sql -O /var/opt/bot/db_init_scripts/v0001_create_schema.sql
+            wget --no-cache --no-cookies https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0002_create_tables.sql -O /var/opt/bot/db_init_scripts/V0002_create_tables.sql
+            wget --no-cache --no-cookies https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0003_insert_data.sql -O /var/opt/bot/db_init_scripts/V0003_insert_data.sql
             
             cat <<EOT > /var/opt/bot/.env
             TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
