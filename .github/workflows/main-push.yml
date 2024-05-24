@@ -85,7 +85,7 @@ jobs:
             echo "[INFO] Removing old docker objects..."
             docker rm -f opt-bot_db-1 2> /dev/null
             docker volume rm -f opt_bot-db-data 2> /dev/null
-            rm -r /tmp/BOT_DB_DATA /dev/null
+            rm -r /tmp/BOT_DB_DATA 2> /dev/null
             
             docker compose --env-file /var/opt/bot/.env -f /var/opt/docker-compose.yml up -d
             echo "Deploying BOT APP complete"
