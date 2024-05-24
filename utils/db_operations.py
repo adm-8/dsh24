@@ -9,12 +9,13 @@ from utils.logs import get_logger
 logger = get_logger(file_path=logger_file_path)
 
 
-def execute_sql(sql: str):
+def execute_sql(sql: str, data):
     logger.info("Executing SQL:", sql)
+    logger.info("data = ", data)
     with psycopg.connect(PG_DB_URI) as conn:
         with conn.cursor() as cur:
             try:
-                cur.execute(sql)
+                cur.execute(sql, data)
                 conn.commit()
             except Exception as e:
                 conn.rollback()
@@ -29,4 +30,4 @@ def log_message(update: Update, context: ContextTypes):
     user_id = update.message.from_user.id
     msg_id = update.update_id
 
-    execute_sql(f"""INSERT INTO app.messages (id, user_id, body) VALUES({msg_id}, {user_id}, '{update_obj}')""")
+    execute_sql("INSERT INTO app.messages (id, user_id, body) VALUES(%s, %s, %s)", (msg_id, user_id, update_obj))
