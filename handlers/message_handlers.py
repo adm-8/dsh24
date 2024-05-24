@@ -5,7 +5,7 @@ from utils.db_operations import log_message
 
 async def chatgpt_reply(update: Update, context):
     # логируем сообщение
-    log_message(update=update, context=context)
+    await log_message(update=update, context=context)
     # текст входящего сообщения
     text = update.message.text
 
