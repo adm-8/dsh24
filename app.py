@@ -19,11 +19,5 @@ application.add_handler(hello_command_handler)
 photo_handler = MessageHandler(filters.PHOTO, image_file_reply)
 application.add_handler(photo_handler)
 
-
-from config.logs import logger_file_path
-from utils.logs import get_logger
-logger = get_logger(file_path=logger_file_path)
-
 # Запуск бота
-logger.info("Starting app...")
 application.run_polling()

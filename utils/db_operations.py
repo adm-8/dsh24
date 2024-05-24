@@ -9,7 +9,7 @@ from utils.logs import get_logger
 logger = get_logger(file_path=logger_file_path)
 
 
-def execute_sql(sql: str, data):
+async def execute_sql(sql: str, data):
     logger.info("Executing SQL:", sql)
     logger.info("data = ", data)
     with psycopg.connect(PG_DB_URI) as conn:
@@ -22,7 +22,8 @@ def execute_sql(sql: str, data):
                 logger.error(e)
 
 
-def log_message(update: Update, context: ContextTypes):
+async def log_message(update: Update, context: ContextTypes):
+    logger.info("Logging user message...")
     # Преобразуем объект
     update_obj = json.dumps(update.to_dict())
 
@@ -30,4 +31,4 @@ def log_message(update: Update, context: ContextTypes):
     user_id = update.message.from_user.id
     msg_id = update.update_id
 
-    execute_sql("INSERT INTO app.messages (id, user_id, body) VALUES(%s, %s, %s)", (msg_id, user_id, update_obj))
+    await execute_sql("INSERT INTO app.messages (id, user_id, body) VALUES(%s, %s, %s)", (msg_id, user_id, update_obj))
