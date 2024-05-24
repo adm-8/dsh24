@@ -1,4 +1,7 @@
 FROM python:3.9
+
+RUN apt-get update && apt-get -y install libpq-dev gcc
+
 WORKDIR /app
 
 # копируем файл зависимостей и устанавливаем их
