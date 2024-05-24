@@ -1,9 +1,9 @@
 # данные пользователя на Docker Hub
-USERNAME=UserNameDockerHub
-REPO=RepositoryNameDockerHub
+USERNAME=adm8
+REPO=data_team_assist_bot
 TAG=v1
-TELEGRAM_BOT_TOKEN=1235
-OPENAI_API_KEY=1234
+TELEGRAM_BOT_TOKEN=TELEGRAM_BOT_TOKEN
+OPENAI_API_KEY=OPENAI_API_KEY
 
 IMAGE = $(USERNAME)/$(REPO):$(TAG)
 
