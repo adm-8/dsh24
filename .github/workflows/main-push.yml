@@ -56,11 +56,14 @@ jobs:
           port: ${{ secrets.REMOTE_SERVER_PORT }}
           script: |
             echo "Deploying BOT APP..."
-            mkdir -p /var/opt/bot
             
-            rm /var/opt/bot/docker-compose.yml 2> /dev/null
+            rm -r /var/opt/bot/ 2> /dev/null
+            mkdir -p /var/opt/bot/db_init_scripts
             
             wget https://raw.githubusercontent.com/adm-8/dsh24/main/docker-compose.yml -O /var/opt/bot/docker-compose.yml
+            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/v0001_create_schema.sql -O /var/opt/bot/db_init_scripts/v0001_create_schema.sql
+            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0002_create_tables.sql -O /var/opt/bot/db_init_scripts/V0002_create_tables.sql
+            wget https://raw.githubusercontent.com/adm-8/dsh24/main/db_init_scripts/V0003_insert_data.sql -O /var/opt/bot/db_init_scripts/V0003_insert_data.sql
             
             cat <<EOT > /var/opt/bot/.env
             TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -90,5 +93,5 @@ jobs:
             docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
             docker rmi $(docker images -f "dangling=true" -q) --force
             
-            docker compose --env-file /var/opt/bot/.env -f /var/opt/docker-compose.yml up -d
+            cd /var/opt/bot && docker compose --env-file /var/opt/bot/.env -f /var/opt/docker-compose.yml up -d
             echo "Deploying BOT APP complete"
