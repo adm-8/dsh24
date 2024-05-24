@@ -88,6 +88,7 @@ jobs:
             rm -r /tmp/BOT_DB_DATA 2> /dev/null
             
             docker image prune -f
+            docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.DOCKERHUB_REPO }}:${{ vars.DOCKERHUB_TAG }}
             
             docker compose --env-file /var/opt/bot/.env -f /var/opt/docker-compose.yml up -d
             echo "Deploying BOT APP complete"
