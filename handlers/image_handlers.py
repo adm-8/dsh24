@@ -3,8 +3,12 @@ import re
 from telegram import Update
 from config.openai_client import client
 from utils.helpers import image_to_base64
+from utils.db_operations import log_message
 
 async def image_file_reply(update, context):
+    # логируем сообщение
+    log_message(update=update, context=context)
+
     # Получение объекта File
     image_file = await context.bot.get_file(update.message.photo[-1].file_id)
     print("image_file -> ", image_file)

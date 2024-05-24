@@ -3,7 +3,6 @@ import json
 from telegram import Update,KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
 from utils.db_operations import log_message
-from config.pgdb import PG_DB_URI
 
 async def start_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # логируем сообщение
