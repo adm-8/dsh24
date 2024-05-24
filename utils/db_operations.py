@@ -13,11 +13,16 @@ async def execute_sql(sql: str, data):
     with psycopg.connect(PG_DB_URI) as conn:
         with conn.cursor() as cur:
             try:
+                logger.info("Executing SQL...")
                 cur.execute(sql, data)
+
+                logger.info("Commit data...")
                 conn.commit()
+
+                logger.info("SQL executed successfully!")
             except Exception as e:
                 conn.rollback()
-                logger.error(e)
+                logger.info(f"Error: {e}")
 
 
 async def log_message(update: Update, context: ContextTypes):
