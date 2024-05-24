@@ -1,7 +1,11 @@
 from telegram import Update
-from config.openai_client import client 
+from config.openai_client import client
+from utils.db_operations import log_message
+
 
 async def chatgpt_reply(update: Update, context):
+    # логируем сообщение
+    log_message(update=update, context=context)
     # текст входящего сообщения
     text = update.message.text
 
