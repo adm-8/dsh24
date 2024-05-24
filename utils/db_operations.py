@@ -1,15 +1,12 @@
 from config.pgdb import PG_DB_URI
 from telegram import Update
 from telegram.ext import ContextTypes
-from utils.logs import get_logger
 import psycopg
 import json
-from dotenv import load_dotenv
-import os
 
-
-load_dotenv()
-logger = get_logger(file_path=os.getenv("LOGGER_FILE_PATH"))
+from config.logs import logger_file_path
+from utils.logs import get_logger
+logger = get_logger(file_path=logger_file_path)
 
 
 def execute_sql(sql: str):
