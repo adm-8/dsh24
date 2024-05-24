@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS app.users (
 
 CREATE TABLE IF NOT EXISTS app.messages (
     id  integer NOT NULL,
-    user_id integer NOT NULL REFERENCES app.users (id) ,
+    user_id integer NOT NULL REFERENCES app.users (id),
     body jsonb NOT NULL DEFAULT '{}'::jsonb,
     msg_dttm timestamp NOT NULL DEFAULT NOW()
 );
