@@ -13,7 +13,7 @@ async def execute_sql(sql: str, data):
     with psycopg.connect(PG_DB_URI) as conn:
         with conn.cursor() as cur:
             try:
-                logger.info("Executing SQL...")
+                logger.info("Executing SQL")
                 cur.execute(sql, data)
 
                 logger.info("Commit data...")
@@ -26,7 +26,6 @@ async def execute_sql(sql: str, data):
 
 
 async def log_message(update: Update, context: ContextTypes):
-    logger.info("Logging user message...")
     # Преобразуем объект
     update_obj = json.dumps(update.to_dict())
 
@@ -34,4 +33,6 @@ async def log_message(update: Update, context: ContextTypes):
     user_id = update.message.from_user.id
     msg_id = update.update_id
 
-    await execute_sql("INSERT INTO app.messages (id, user_id, body) VALUES(%s, %s, %s)", (msg_id, user_id, update_obj))
+    logger.info(f"Logging user message:\nuser_id = {user_id}\n msg_id={msg_id}\nupdate_obj={update_obj}")
+
+    await execute_sql("INSERT INTO app.messages (id, user_id, body, msg_dttm) VALUES(%s, %s, %s, now())", (msg_id, user_id, update_obj))
