@@ -1091,3 +1091,15 @@ INSERT INTO app.messages (id, user_id, msg_dttm) VALUES(996, 5728347, now() - in
 INSERT INTO app.messages (id, user_id, msg_dttm) VALUES(997, 5728358, now() - interval '9 day' - interval '7 hour');
 INSERT INTO app.messages (id, user_id, msg_dttm) VALUES(998, 5728384, now() - interval '2 day' - interval '13 hour');
 INSERT INTO app.messages (id, user_id, msg_dttm) VALUES(999, 5728315, now() - interval '0 day' - interval '20 hour');
+
+-- UPDATE last_action_dttm on USERS
+update app.users as u
+set last_action_dttm = sq.last_action_dttm
+from (
+	select
+		user_id
+		, max(msg_dttm) as last_action_dttm
+	from app.messages m
+	group by user_id
+) as sq
+where u.id = sq.user_id;
