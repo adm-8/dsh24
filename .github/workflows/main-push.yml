@@ -78,7 +78,7 @@ jobs:
             DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
             DOCKERHUB_REPO=${{ vars.DOCKERHUB_REPO }}
             DOCKERHUB_TAG=${{ vars.DOCKERHUB_TAG }}
-            LOGGER_FILE_PATH=/var/log/bot.log
+            LOGGER_FILE_PATH='/var/log/bot.log'
             EOT
             
             echo "[INFO] CURRENT CONTAINER LIST:"
