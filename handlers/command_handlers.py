@@ -5,12 +5,26 @@ from telegram.ext import ContextTypes
 
 async def start_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # объект обновления
-    update_obj = json.dumps(update.to_dict(), indent=4)
+    #update_obj = json.dumps(update.to_dict(), indent=4)
 
     # ответ
-    reply = "*update object*\n\n" + "```json\n" + update_obj + "\n```"
+    reply = "Привет! Я бот-помощник. Напиши сообщение и я спрошу у ChatGPT. Можешь даже отправить картинку с запросом.\n" + \
+            "А если отправить картинку с изображением таблицы без подписи, то я верну SQL-скрипт для создания этой таблицы.\n" + \
+            "А ещё я умею говорить 'Привет' по команде /hello"
+    #reply = "*update object*\n\n" + "```json\n" + update_obj + "\n```"
 
     # перенаправление ответа в Telegram
-    await update.message.reply_text(reply, parse_mode="Markdown")
+    #await update.message.reply_text(reply, parse_mode="Markdown")
+    await update.message.reply_text(reply)
 
     print("assistant:", reply)
+    
+async def hello_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # ответ
+    reply = f"Привет, {update.message.chat.first_name}!" 
+    
+    # перенаправление ответа в Telegram
+    await update.message.reply_text(reply)
+
+    print("assistant:", reply)
+    
