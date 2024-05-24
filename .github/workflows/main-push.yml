@@ -74,6 +74,7 @@ jobs:
             POSTGRES_USER=BOT_USER
             POSTGRES_PASSWORD=BOT_PASS
             POSTGRES_DB_STORE_PATH='/tmp/BOT_DB_DATA'
+            POSTGRES_INIT_DB_PATH='/var/opt/bot/db_init_scripts'
             DOCKERHUB_USERNAME=${{ vars.DOCKERHUB_USERNAME }}
             DOCKERHUB_REPO=${{ vars.DOCKERHUB_REPO }}
             DOCKERHUB_TAG=${{ vars.DOCKERHUB_TAG }}
