@@ -29,4 +29,4 @@ def log_message(update: Update, context: ContextTypes):
     user_id = update.message.from_user.id
     msg_id = update.update_id
 
-    execute_sql(f"""INSERT INTO app.messages (id, user_id, body) VALUES({msg_id}, {user_id}, '{update_obj}'::json)""")
+    execute_sql(f"""INSERT INTO app.messages (id, user_id, body) VALUES({msg_id}, {user_id}, '{update_obj}')""")
